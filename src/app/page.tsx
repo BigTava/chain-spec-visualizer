@@ -1,101 +1,90 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main
+      className="h-full md:min-w-[18rem] lg:min-w-[24rem] xl:min-w-[32rem]"
+      id="block-panel-left"
+      style={{ flex: "1 1 0px", overflow: "hidden" }}
+      data-panel=""
+      data-panel-group-id="block-panel-group"
+      data-panel-id="block-panel-left"
+      data-panel-size="1.0"
+    >
+      <div className="absolute inset-0 flex select-none items-center justify-center overflow-hidden sm:p-4">
+        <div className="absolute top-1/2 z-10 flex min-h-[285px] w-full max-w-[49rem] -translate-y-1/2 flex-col items-stretch justify-start px-6 sm:min-h-[270px]">
+          <div className="mb-6 flex flex-col items-center gap-6">
+            <h1
+              data-testid="app-title"
+              className="font-heading text-pretty text-center text-[29px] font-semibold tracking-tighter text-gray-900 sm:text-[32px] md:text-[46px]"
+            >
+              What can I help you build?
+            </h1>
+          </div>
+          <div className="bg-gray-100 rounded-b-xl">
+            <form className="focus-within:border-alpha-600 border-alpha-400 bg-background-subtle relative rounded-xl border transition-colors">
+              <div className="@container/textarea bg-background-subtle relative z-10 grid rounded-xl">
+                <label className="sr-only" htmlFor="chat-main-textarea">
+                  Chat Input
+                </label>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+                <div className="relative flex [&amp;_textarea]:relative [&amp;_textarea]:z-10 [&amp;_textarea]:bg-transparent rounded-xl border-0">
+                  <textarea
+                    autoFocus
+                    id="chat-main-textarea"
+                    name="content"
+                    placeholder="Message Polkadot Factory…"
+                    style={{
+                      height: "42px",
+                      minHeight: "42px",
+                      maxHeight: "384px",
+                    }}
+                    spellCheck="false"
+                    className="resize-none overflow-auto w-full flex-1 bg-transparent p-3 pb-1.5 text-sm outline-none ring-0 placeholder:text-gray-500"
+                    data-1p-ignore="true"
+                    data-dashlane-disabled-on-field="true"
+                  ></textarea>
+                  <div
+                    className="absolute inset-0 inline overflow-auto whitespace-pre-wrap break-words border border-transparent text-sm pointer-events-none -translate-x-px -translate-y-px p-3 pb-1.5"
+                    aria-hidden="true"
+                  >
+                    <span className="data-[slot=mention]:*:bg-teal-100"></span>
+                    <button
+                      type="button"
+                      aria-haspopup="dialog"
+                      aria-expanded="false"
+                      aria-controls="radix-:r1:"
+                      data-state="closed"
+                    ></button>
+                  </div>
+                </div>
+                <div className="flex ml-auto items-center gap-2 p-3">
+                  <button
+                    className="focus-visible:ring-offset-background inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap text-nowrap border font-medium outline-none ring-blue-600 transition-all focus-visible:ring-2 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:ring-0 has-[:focus-visible]:ring-2 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-gray-100 aria-disabled:text-gray-400 aria-disabled:ring-0 [&amp;>svg]:pointer-events-none [&amp;>svg]:size-4 [&amp;_svg]:shrink-0 disabled:border-alpha-400 text-background aria-disabled:border-alpha-400 border-gray-900 bg-gray-900 hover:border-gray-700 hover:bg-gray-700 focus:border-gray-700 focus:bg-gray-700 focus-visible:border-gray-700 focus-visible:bg-gray-700 px-3 text-sm has-[>kbd]:gap-2 has-[>svg]:px-2 has-[>kbd]:pr-[6px] rounded-lg size-7"
+                    disabled
+                    data-testid="prompt-form-send-button"
+                    type="submit"
+                  >
+                    <svg
+                      data-testid="geist-icon"
+                      height="16"
+                      strokeLinejoin="round"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      style={{ color: "currentcolor" }}
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M8.70711 1.39644C8.31659 1.00592 7.68342 1.00592 7.2929 1.39644L2.21968 6.46966L1.68935 6.99999L2.75001 8.06065L3.28034 7.53032L7.25001 3.56065V14.25V15H8.75001V14.25V3.56065L12.7197 7.53032L13.25 8.06065L14.3107 6.99999L13.7803 6.46966L8.70711 1.39644Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    </main>
   );
 }
