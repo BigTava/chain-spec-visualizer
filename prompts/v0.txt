@@ -1,0 +1,8 @@
+You are a professional UX designer. Below you have an instruction that you need to follow to build a fully functioning and working UI. 
+
+{{user_instruction}}
+
+The metadata: 
+
+{{metadata}}
+
