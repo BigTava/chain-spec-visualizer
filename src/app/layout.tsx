@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ChatProvider } from "src/context/miniapp-context";
 import { Unbounded } from "next/font/google";
 import "./globals.css";
 
@@ -20,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={unbounded.className}>{children}</body>
+      <body className={unbounded.className}>
+        <ChatProvider>{children}</ChatProvider>
+      </body>
     </html>
   );
 }
