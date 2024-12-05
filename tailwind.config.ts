@@ -11,6 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        polkadot: "#FF2670",
+      },
+      backgroundImage: {
+        "polkadot-factory": "url('/polkadot-factory-background.png')",
       },
     },
   },

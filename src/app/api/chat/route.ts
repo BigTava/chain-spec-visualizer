@@ -19,19 +19,15 @@ async function readPromptFromFile(): Promise<string> {
 export async function POST(req: Request) {
   const { messages: promptRequest } = await req.json();
 
-  const userPrompt = await promptRequest[0].content;
+  const userPrompt = await promptRequest[promptRequest.length - 1].content;
   const systemPrompt = await readPromptFromFile();
-  console.log("user prompt", userPrompt);
+
   const result = streamText({
     model: openai("gpt-4o"),
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: userPrompt },
     ],
-    async onFinish({ text, toolCalls, toolResults, usage, finishReason }) {
-      // implement your own logic here, e.g. for storing messages
-      // or recording token usage
-    },
   });
 
   return result.toDataStreamResponse();

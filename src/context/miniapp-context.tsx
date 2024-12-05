@@ -17,7 +17,6 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const message = localStorage.getItem("message");
-    console.log("message", message);
     if (message) {
       setMessage(JSON.parse(message));
     }

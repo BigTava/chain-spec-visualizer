@@ -1,4 +1,4 @@
-export const EXAMPLE_PRMOP = `
+export const EXAMPLE_RESPONSE_REMARK = `
 o send a remark on the Westend network using a React component, you would typically interact with the Polkadot.js API. Below is a self-contained React component that demonstrates how to send a remark transaction on the Westend network. This example assumes you have a basic understanding of how to use Polkadot.js and have a wallet extension like Polkadot.js extension installed in your browser.
 
 \`\`\`jsx

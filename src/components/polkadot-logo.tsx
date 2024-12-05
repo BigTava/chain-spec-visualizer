@@ -10,8 +10,12 @@ export function PolkadotLogo({
 }: HtmlHTMLAttributes<HTMLDivElement>) {
   return (
     <nav className={cn("flex justify-center", className)}>
-      <Link href="/" className={cn("select-none outline-none", className)}>
-        <Image src={polkadotLogoSvg} alt="Unwallet Logo" height={35} priority />
+      <Link
+        href="/"
+        className={cn("select-none outline-none", className)}
+        as="image"
+      >
+        <Image src={polkadotLogoSvg} alt="Polkadot Logo" height={35} priority />
       </Link>
     </nav>
   );

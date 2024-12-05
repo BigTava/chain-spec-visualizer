@@ -1,57 +1,74 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useRef } from "react";
 
 import { useChat } from "ai/react";
 import { useChatContext } from "src/context/miniapp-context";
 import { PolkadotLogo } from "src/components/polkadot-logo";
+import { cn } from "src/utils/cn";
+import { ArrowUpRight } from "lucide-react";
 
 export default function Home() {
-  const [isFinished, setIsFinished] = useState(false);
-
   const { setMessage } = useChatContext();
 
   const { input, handleInputChange, handleSubmit, isLoading } = useChat({
-    onFinish(message, { usage, finishReason }) {
-      console.log("message", message);
-      console.log("Usage:", usage);
-      console.log("Finish Reason:", finishReason);
+    onFinish(message) {
       setMessage(message.content);
-      setIsFinished(true);
+      window.open("/miniapp", "_blank");
     },
   });
 
-  useEffect(() => {
-    if (isFinished) {
-      window.open("/miniapp", "_blank");
+  const handlePillClick = (prompt: string) => {
+    handleInputChange({
+      target: { value: prompt },
+    } as React.ChangeEvent<HTMLTextAreaElement>);
+    if (formRef.current) {
+      formRef.current.dispatchEvent(
+        new Event("submit", { cancelable: true, bubbles: true })
+      );
     }
-  }, [isFinished, isLoading]);
+  };
+
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    window.open("/miniapp", "_blank");
+    handleSubmit(e);
+  };
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   return (
     <main
       className="h-full md:min-w-[18rem] lg:min-w-[24rem] xl:min-w-[32rem]"
       id="block-panel-left"
-      style={{ flex: "1 1 0px", overflow: "hidden" }}
-      data-panel=""
       data-panel-group-id="block-panel-group"
       data-panel-id="block-panel-left"
       data-panel-size="1.0"
     >
-      <div className="absolute inset-0 flex select-none items-center justify-center overflow-hidden sm:p-4">
-        <div className="absolute top-1/2 z-10 flex min-h-[285px] w-full max-w-[50rem] -translate-y-1/2 flex-col items-stretch justify-start px-6 sm:min-h-[270px]">
+      <div
+        style={{
+          flex: "1 1 0px",
+          overflow: "hidden",
+          backgroundImage: "url('/polkadot-factory-background.png')",
+        }}
+        className="absolute inset-0 flex select-none items-center justify-center overflow-hidden sm:p-4 bg-cover bg-center"
+      >
+        <div className="absolute top-1/2 z-10 flex min-h-[285px] w-full max-w-[52rem] -translate-y-1/2 flex-col items-stretch justify-start px-6 sm:min-h-[270px]">
           <div className="mb-6 flex flex-col sm:flex-row items-center gap-3 flex-nowrap overflow-hidden font-heading text-pretty text-[29px] font-semibold tracking-tighter text-gray-900 whitespace-nowrap sm:text-[32px]">
             <h1 data-testid="app-title" className="text-center">
-              What can I help you build on
+              What do you want to build on
             </h1>
             <span className="flex flex-row items-center gap-3">
-              <PolkadotLogo />
+              <PolkadotLogo
+                className={cn(isLoading && "animate-[spin_4s_linear_infinite]")}
+              />
               <h1>Polkadot?</h1>
             </span>
           </div>
           <div className="bg-gray-100 rounded-b-xl">
             <form
-              onSubmit={handleSubmit}
+              onSubmit={onFormSubmit}
               className="focus-within:border-alpha-600 border-alpha-400 bg-background-subtle relative rounded-xl border transition-colors"
+              ref={formRef}
             >
               <div className="@container/textarea bg-background-subtle relative z-10 grid rounded-xl">
                 <label className="sr-only" htmlFor="chat-main-textarea">
@@ -92,17 +109,20 @@ export default function Home() {
                 </div>
                 <div className="flex ml-auto items-center gap-2 p-3">
                   <button
-                    className="focus-visible:ring-offset-background inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap text-nowrap border font-medium outline-none ring-blue-600 transition-all focus-visible:ring-2 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:ring-0 has-[:focus-visible]:ring-2 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-gray-100 aria-disabled:text-gray-400 aria-disabled:ring-0 [&amp;>svg]:pointer-events-none [&amp;>svg]:size-4 [&amp;_svg]:shrink-0 disabled:border-alpha-400 text-background aria-disabled:border-alpha-400 border-gray-900 bg-gray-900 hover:border-gray-700 hover:bg-gray-700 focus:border-gray-700 focus:bg-gray-700 focus-visible:border-gray-700 focus-visible:bg-gray-700 px-3 text-sm has-[>kbd]:gap-2 has-[>svg]:px-2 has-[>kbd]:pr-[6px] rounded-lg size-7"
+                    className={cn(
+                      "focus-visible:ring-offset-background inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 whitespace-nowrap text-nowrap border font-medium outline-none ring-blue-600 transition-all focus-visible:ring-2 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:cursor-not-allowed has-[:focus-visible]:ring-2 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:bg-gray-100 aria-disabled:text-gray-400 aria-disabled:ring-0 [&amp;>svg]:pointer-events-none [&amp;>svg]:size-4 [&amp;_svg]:shrink-0 disabled:border-alpha-400 text-background aria-disabled:border-alpha-400 border-polkadot bg-polkadot hover:border-gray-700 hover:bg-gray-700 focus:border-gray-700 focus:bg-gray-700 focus-visible:border-gray-700 focus-visible:bg-gray-700 px-3 text-sm has-[>kbd]:gap-2 has-[>svg]:px-2 has-[>kbd]:pr-[6px] rounded-lg size-7 disabled:bg-polkadot disabled:hover-polkadot"
+                    )}
                     data-testid="prompt-form-send-button"
                     type="submit"
+                    disabled={isLoading}
                   >
                     <svg
                       data-testid="geist-icon"
                       height="16"
+                      width="16"
                       strokeLinejoin="round"
                       viewBox="0 0 16 16"
-                      width="16"
-                      style={{ color: "currentcolor" }}
+                      style={{ color: "white" }}
                     >
                       <path
                         fillRule="evenodd"
@@ -115,6 +135,31 @@ export default function Home() {
                 </div>
               </div>
             </form>
+          </div>
+          <div className="grid grid-cols-12 gap-4 mt-6 justify-items-center">
+            <div
+              onClick={() => handlePillClick("App to send a remark in Westend")}
+              className="flex flex-row col-start-1 col-span-3 text-[14px] cursor-pointer color-black text-opacity-60 items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Send a remark <ArrowUpRight size={18} className="ml-2" />
+            </div>
+            <div
+              onClick={() => handlePillClick("App to stake in Westend")}
+              className="flex flex-row max-w-[172px] col-start-4 col-span-3 text-[14px] cursor-pointer color-black text-opacity-60 items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Staking WND <ArrowUpRight size={18} className="ml-2" />
+            </div>
+            <div
+              onClick={() =>
+                handlePillClick(
+                  "App to make gavin wood send all this DOT to me"
+                )
+              }
+              className="flex flex-row max-w-[380px] col-start-7 col-span-6 text-[14px] cursor-pointer color-black text-opacity-60 items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Dapp to make Gav send me all his DOT
+              <ArrowUpRight size={18} className="ml-2" />
+            </div>
           </div>
         </div>
       </div>

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Babel from "@babel/standalone";
 import { WsProvider, ApiPromise } from "@polkadot/api";
 import {
   web3Enable,
   web3Accounts,
   web3FromSource,
+  web3FromAddress,
 } from "@polkadot/extension-dapp";
 
 export function stringToJsx(jsxCode: string) {
@@ -12,15 +13,17 @@ export function stringToJsx(jsxCode: string) {
     const imports = {
       React,
       useState,
+      useEffect,
       WsProvider,
       ApiPromise,
       web3Enable,
       web3Accounts,
       web3FromSource,
+      web3FromAddress,
     };
 
     const sanitizedCode = jsxCode.replace(
-      /import\s+([\w{}*,\s]+)\s+from\s+['"]([^'"]+)['"];/g,
+      /import\s+(?:([\w{}*,\s]+)\s+from\s+)?['"]([^'"]+)['"];/g,
       (match, imported, source) => {
         if (source === "react") {
           imports.React = React;
@@ -34,10 +37,13 @@ export function stringToJsx(jsxCode: string) {
           imports.web3Enable = web3Enable;
           imports.web3Accounts = web3Accounts;
           imports.web3FromSource = web3FromSource;
+          imports.web3FromAddress = web3FromAddress;
         }
         return "";
       }
     );
+
+    console.log("sanitizedCode", sanitizedCode);
 
     // Transform JSX to JavaScript
     const transformedCode = Babel.transform(sanitizedCode, {
@@ -47,7 +53,7 @@ export function stringToJsx(jsxCode: string) {
     // Wrap the transformed code in a function
     const Component = new Function(
       ...Object.keys(imports),
-      `${transformedCode}; return SendRemark;`
+      `${transformedCode}; return MiniApp;`
     )(...Object.values(imports));
 
     return <Component />;
